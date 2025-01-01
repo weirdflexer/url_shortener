@@ -1,4 +1,5 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import RedirectResponse
 from contextlib import asynccontextmanager
 from database import create_table
 from routers.shortener import shortenerRouter
@@ -17,6 +18,13 @@ app = FastAPI(lifespan=lifespan,
               openapi_url="/api/openapi.json"
               )
 app.include_router(shortenerRouter)
+
+
+@app.api_route("/{path_name:path}", methods=["GET", "POST",
+                                             "PUT", "DELETE",
+                                             "PATCH"])
+async def catch_all(request: Request, path_name: str):
+    return RedirectResponse(url="/api/openapi.json")
 
 
 if __name__ == "__main__":
