@@ -22,7 +22,7 @@ async def create_short_url(url: URLCreate, session: SessionDep):
     if (urlFromBase):
         short_url = urlFromBase.short_url
         return {"status": "200",
-                "short_url": f"http://localhost:8000/api/{short_url}"
+                "short_url": f"http://localhost/api/{short_url}"
                 }
     else:
         short_url = generate_short_url(url.original_url.__str__())
@@ -31,7 +31,7 @@ async def create_short_url(url: URLCreate, session: SessionDep):
         session.add(urlM)
         await session.commit()
         return {"status": "200",
-                "short_url": f"http://localhost:8000/api/{short_url}"
+                "short_url": f"http://localhost/api/{short_url}"
                 }
 
 
